@@ -34,12 +34,13 @@
 
 
 	<!-- JavaScript-->
-
+	<script href="{{ asset('assets/js/total.js') }}"></script>
 	<script src="{{ mix('/assets/js/modernizr-2.6.2.min.js') }}"></script>
 	<script src="{{ mix('assets/js/jquery.min.js') }}"></script>
 	<script src="{{ mix('assets/js/all-js.js') }}"></script>
 	<script src="{{ mix('/assets/js/main.js') }}"></script>
 	<script src="{{ mix('assets/js/bootstrap.min.js') }}"></script>
+	<script src="{{ asset('assets/js/display_form.js') }}"></script>
 	
 </head>
 <body >

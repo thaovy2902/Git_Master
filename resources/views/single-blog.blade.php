@@ -1,6 +1,6 @@
 @extends('layouts.app_body')	
 @section('header')
-@include('components.header_guess')
+@include('components.header_user')
 <!-- end:header-top -->
 @include('components.header_review')
 @endsection
@@ -102,101 +102,30 @@
                     </div>
                     <div class="blog-author">
                         <div class="media align-items-center">
-                            <img src="{{ asset('assets/images/blog/author.png') }}" alt="">
+                            @if ($user->images->first())
+                                <img class="avatar_reply" src="{{ asset("$user->images->first()->url") }}" alt="" />
+                            @else
+                                <img class="avatar_reply" src="{{ asset('/assets/images/service/default-avatar.png') }}" alt="" />
+                            @endif
                             <div class="media-body">
-                                <h4>Harvard milan</h4>
+                                <h4>{{ $user->name }}</h4>
                             </div>
                         </div>
                     </div>
                     <div class="comments-area">
-                        <h4>05 {{ trans('messages.comments') }}</h4>
-                        <div class="comment-list">
-                            <div class="single-comment justify-content-between d-flex">
-                                <div class="user justify-content-between d-flex">
-                                    <div class="thumb">
-                                        <img src="{{ asset('assets/images/comment/comment_1.png')}}" alt="">
-                                    </div>
-                                    <div class="desc">
-                                        <p class="comment">
-                                            Multiply sea night grass fourth day sea lesser rule open subdue female fill which them
-                                            Blessed, give fill lesser bearing multiply sea night grass fourth day sea lesser
-                                        </p>
-                                        <div class="d-flex justify-content-between">
-                                            <div class="d-flex align-items-center">
-                                                <h5>
-                                                <a href="#">Emilly Blunt</a>
-                                                </h5>
-                                                <p class="date">December 4, 2017 at 3:12 pm </p>
-                                            </div>
-                                            <div class="reply-btn">
-                                                <a href="#" class="btn-reply text-uppercase">{{ trans('messages.reply') }}</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="comment-list">
-                            <div class="single-comment justify-content-between d-flex">
-                                <div class="user justify-content-between d-flex">
-                                    <div class="thumb">
-                                        <img src="{{ asset('assets/images/comment/comment_1.png')}}" alt="">
-                                    </div>
-                                    <div class="desc">
-                                        <p class="comment">
-                                            Multiply sea night grass fourth day sea lesser rule open subdue female fill which them
-                                            Blessed, give fill lesser bearing multiply sea night grass fourth day sea lesser
-                                        </p>
-                                        <div class="d-flex justify-content-between">
-                                            <div class="d-flex align-items-center">
-                                                <h5>
-                                                <a href="#">Emilly Blunt</a>
-                                                </h5>
-                                                <p class="date">December 4, 2017 at 3:12 pm </p>
-                                            </div>
-                                            <div class="reply-btn">
-                                                <a href="#" class="btn-reply text-uppercase">{{ trans('messages.reply') }}</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="comment-list">
-                            <div class="single-comment justify-content-between d-flex">
-                                <div class="user justify-content-between d-flex">
-                                    <div class="thumb">
-                                        <img src="{{ asset('assets/images/comment/comment_1.png')}}" alt="">
-                                    </div>
-                                    <div class="desc">
-                                        <p class="comment">
-                                            Multiply sea night grass fourth day sea lesser rule open subdue female fill which them
-                                            Blessed, give fill lesser bearing multiply sea night grass fourth day sea lesser
-                                        </p>
-                                        <div class="d-flex justify-content-between">
-                                            <div class="d-flex align-items-center">
-                                                <h5>
-                                                <a href="#">Emilly Blunt</a>
-                                                </h5>
-                                                <p class="date">December 4, 2017 at 3:12 pm </p>
-                                            </div>
-                                            <div class="reply-btn">
-                                                <a href="#" class="btn-reply text-uppercase">{{ trans('messages.reply') }}</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        <h4> {{ $review->comments->count() }} {{ trans('messages.comments') }}</h4>
+                        @include('comment_list', ['comments' => $review->comments->whereNull('comment-parent-id'), 'review_id' => $review->id])
                     </div>
                     <div class="comment-form">
                         <h4>{{ trans('messages.leave_reply') }}</h4>
-                        <form class="form-contact comment_form" action="#" id="commentForm">
+                        <form class="form-contact comment_form" action="{{ route('comments.store') }}" method="POST" id="commentForm">
+                            {{ csrf_field() }}
                             <div class="row">
                                 <div class="col-12">
                                 <div class="form-group">
-                                    <textarea class="form-control w-100" name="comment" id="comment" cols="30" rows="9"
-                                        placeholder="{{ trans('messages.write_cmt') }}"></textarea>
+                                    <textarea class="form-control w-100" name="content" id="comment" cols="30" rows="9"
+                                        placeholder="{{ trans('messages.write_cmt') }}" required></textarea>
+                                    <input type=hidden name='review-id' value="{{ $review->id }}" />
                                 </div>
                                 </div>
                             </div>

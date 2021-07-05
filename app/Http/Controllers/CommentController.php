@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Review;
 use Illuminate\Http\Request;
+use App\Models\Comment;
+use Illuminate\Support\Facades\Auth;
 
-class ReviewController extends Controller
+class CommentController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,9 +15,7 @@ class ReviewController extends Controller
      */
     public function index()
     {
-        $reviews = Review::with('images')->oldest()->paginate(config('app.default_paginate_review'));
-
-        return view('blog', compact('reviews'));
+        //
     }
 
     /**
@@ -37,7 +36,13 @@ class ReviewController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $input = $request->all();
+        $input['account-id'] = auth()->user()->id;
+
+        $comment = Comment::create($input);
+        $comment->save();
+
+        return redirect(url()->previous() . '#position_cmt');
     }
 
     /**
@@ -48,14 +53,7 @@ class ReviewController extends Controller
      */
     public function show($id)
     {
-        $review = Review::find($id);
-        if (!$review) {
-            return redirect()->route('reviews.index')->with('error', trans('messages.not_found_review'));
-        }
-        $images = $review->images->all();
-        $user = $review->user;
-
-        return view('single-blog', compact('review', 'images', 'user'));
+        //
     }
 
     /**

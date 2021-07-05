@@ -26,4 +26,12 @@ class Review extends Model
     {
         return $this->belongsTo(Category_review::class, 'id', 'id');
     }
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'account-id', 'id');
+    }
+    public function comments()
+    {
+        return $this->hasMany(Comment::class, 'review-id', 'id');
+    }
 }

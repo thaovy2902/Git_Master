@@ -1,6 +1,6 @@
 @extends('layouts.app_body')
 @section('header')
-@include('components.header_guess')
+@include('components.header_user')
 <!-- end:header-top -->
 @include('components.header_search')
 @endsection

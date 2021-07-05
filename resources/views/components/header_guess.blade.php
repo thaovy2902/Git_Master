@@ -62,9 +62,31 @@
                             </ul>
                         </li>
                         <li><a href="{{ route('reviews.index') }}">{{ trans('messages.blog') }}</a></li>
-                        <li><a href="#">{{ trans('messages.contact') }}</a></li>
-                        <li><a href="#">{{ trans('messages.signup') }}</a></li>
-                        <li><a href="#">{{ trans('messages.signin') }}</a></li>
+                        <li><a href="">{{ trans('messages.contact') }}</a></li>
+                        @if (Route::has('login'))
+                        @auth
+                        <div class="menu-user">
+                            <li class="dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" id="navbarDropdown" data-toggle="dropdown" aria-expanded="false"> 
+                                    {{ trans('messages.welcome') }}, User <b class="caret"></b>
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-right">
+                                    <a class="dropdown-item" href="{{ route('users.index') }}">{{ trans('messages.manage_profile') }}</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" href="{{ route('home') }}">{{ trans('messages.logout') }}</a>
+                                </div>
+                            </li>
+                        </div> 
+                        @else
+                        <li><a href="{{ route('login') }}"
+                            class="text-sm text-gray-700 underline">{{ trans('messages.signin') }}</a></li>
+
+                        @if (Route::has('register'))
+                        <li><a href="{{ route('register') }}"
+                            class="ml-4 text-sm text-gray-700 underline">{{ trans('messages.signup') }}</a></li>
+                        @endif
+                        @endauth
+                        @endif
                         <li class="nav-item-dropdown">
                             <a href="#" class="fh5co-sub-ddown">{{ trans('messages.language') }}
                                 <span>&#9660;</span>

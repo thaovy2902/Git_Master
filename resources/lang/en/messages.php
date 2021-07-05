@@ -102,5 +102,19 @@ return [
     'welcome' => 'Welcome',
     'manage_profile' => 'Manage Profile',
     'logout' => 'Logout',
-    'err_img' => 'This is not an image.'
+    'err_img' => 'This is not an image.',
+    'booking_form' => 'Booking Form',
+    'quantity' => 'Quantity',
+    'date_start' => 'Date Start',
+    'total' => 'Total',
+    'booking' => 'Booking',
+    'invoice' => 'INVOICE',
+    'invoice_id' => 'Invoice ID',
+    'price' => 'Price',
+    'content' => 'Content',
+    'response_code' => 'Response Code',
+    'due_date' => 'Due Date',
+    'status' => 'Status',
+    'trans_id' => 'Transaction ID',
+    'swift_code' => 'Swift Code'
 ];

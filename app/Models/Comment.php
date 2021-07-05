@@ -10,10 +10,22 @@ class Comment extends Model
     use HasFactory;
 
     protected $fillable = [
-        'object-type',
-        'object-id',
+        'review-id',
         'account-id',
         'content',
         'comment-parent-id',
     ];
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'account-id', 'id');
+    }
+
+    public function review()
+    {
+        return $this->belongsTo(Review::class, 'review-id', 'id');
+    }
+    public function replies()
+    {
+        return $this->hasMany(Comment::class, 'comment-parent-id', 'id');
+    }
 }
